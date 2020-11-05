@@ -1,0 +1,7 @@
+body {
+    background-color: #f7f7f7;
+}
+div#root > div {
+    min-height: 100vh;
+    background-color: white;
+}

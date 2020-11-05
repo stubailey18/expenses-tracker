@@ -5,8 +5,7 @@ export default function ExpensesFilterForm() {
 
     const [field, setField] = useState('date');
     const [operator, setOperator] = useState('=');
-    const [value, setValue] = useState(new Date().toLocaleTimeString());
-
+    const [value, setValue] = useState('');
     const {dispatch} = useContext(AppStateContext);
 
     return (

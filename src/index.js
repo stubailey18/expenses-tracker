@@ -1,23 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// this is the app's entry point
-// this scrips is used by the bundler to determine what to bundle
-// it is this script that renders to the DOM
-// you're unlikely to render directly to the DOM anywhere else
-
-// <App /> is a custom HTML element (a component)
-// the creation of custom elements is NOT a React thing, it's a JS thing
-
-// <React.StrictMode> enables various checks in development mode
-// e.g. it will result in some functions being executed twice
-// it has NO effect in production mode
-
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
