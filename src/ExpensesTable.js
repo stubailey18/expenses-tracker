@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AppStateContext } from './App';
+import { AppStateContext } from './app-state';
 
 export default function ExpensesTable() {
     
+    const [filteredExpenses, setFilteredExpenses] = useState([]);
+
     const {state} = useContext(AppStateContext);
     const {expenses, filters} = state;
-    const [filteredExpenses, setFilteredExpenses] = useState([]);
 
     useEffect(() => {
         let temp = [...expenses];
@@ -49,7 +50,7 @@ export default function ExpensesTable() {
                         ))}
                     </tbody>
                 </table>
-            ) : <p>There are no expenses to show</p>}
+            ) : <p className="alert alert-warning">There are no expenses to show</p>}
         </>
     );
 }

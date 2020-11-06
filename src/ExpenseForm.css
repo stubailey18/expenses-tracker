@@ -1,8 +1,0 @@
-.invalidField {
-    border: solid 1px red;
-}
-
-.invalidField + span {
-    font-size: smaller;
-    color: red;
-}

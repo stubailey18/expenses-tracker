@@ -1,29 +1,10 @@
 import React, { useReducer } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import { AppStateContext, initialAppState, reducer } from './app-state';
 import Expenses from './Expenses';
 import ExpenseForm from './ExpenseForm';
-
-const reducer = (prevState, action) => {
-  switch (action.type) {
-    case 'newExpense':
-      return {...prevState, expenses: [...prevState.expenses, action.payload]};
-    case 'newFilter':
-      return {...prevState, filters: [...prevState.filters, action.payload]};
-    case 'clearFilters':
-      return {...prevState, filters: []};
-    default:
-      return prevState;
-  }
-}
-
-const initialAppState = {
-  expenses: [], 
-  filters: []
-}
-
-export const AppStateContext = React.createContext();
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 export default function App() {
 

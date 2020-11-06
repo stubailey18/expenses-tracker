@@ -1,12 +1,29 @@
 import React, { useContext, useState } from 'react';
-import { AppStateContext } from './App';
+import { actionTypes, AppStateContext } from './app-state';
+import { toUkDate } from './utils';
 
 export default function ExpensesFilterForm() {
 
     const [field, setField] = useState('date');
     const [operator, setOperator] = useState('=');
     const [value, setValue] = useState('');
+    const [formSubmitted, setFormSubmitted] = useState(false);
+
     const {dispatch} = useContext(AppStateContext);
+
+    const handleApply = () => {
+        setFormSubmitted(true);
+        if (field && operator && value) {
+            dispatch({
+                type: actionTypes.NEW_FILTER, 
+                payload: {field, operator, value: field === 'date' ? toUkDate(value) : value}
+            });
+            setFormSubmitted(false);
+            setField('date');
+            setOperator('=');
+            setValue('');
+        }
+    }
 
     return (
         <form className="form-inline mb-3">
@@ -29,25 +46,20 @@ export default function ExpensesFilterForm() {
                 <option>&lt;</option>
             </select>&nbsp;
             <input 
-                type="text"
+                type={field === 'date' ? 'date' : 'text'}
                 value={value}
                 onChange={e => setValue(e.target.value)}
-                className="form-control" />&nbsp;
+                className={`form-control ${!value && formSubmitted && 'invalidField'}`} />&nbsp;
             <div className="mt-3 mt-md-0">
                 <button 
                     type="button"
-                    onClick={() => {
-                        dispatch({
-                            type: 'newFilter', 
-                            payload: {field, operator, value}
-                        });
-                    }}
+                    onClick={handleApply}
                     className="btn btn-primary">
                     Apply
                 </button>&nbsp;
                 <button 
                     type="button"
-                    onClick={() => dispatch({type: 'clearFilters'})}
+                    onClick={() => dispatch({type: actionTypes.CLEAR_FILTERS})}
                     className="btn btn-primary">
                     Clear
                 </button>
