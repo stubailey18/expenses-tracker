@@ -26,7 +26,8 @@ export default function ExpenseForm() {
             dispatch({
                 type: actionTypes.NEW_EXPENSE, 
                 payload: {
-                    date: toUkDate(date),
+                    // store the date as a number so that it may be serialised and compared
+                    date: Date.parse(date),
                     location: location,
                     amount: +amount,
                     category: category

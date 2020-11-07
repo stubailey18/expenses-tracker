@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { actionTypes, AppStateContext } from './app-state';
-import { toUkDate } from './utils';
 
 export default function ExpensesFilterForm() {
 
@@ -16,7 +15,7 @@ export default function ExpensesFilterForm() {
         if (field && operator && value) {
             dispatch({
                 type: actionTypes.NEW_FILTER, 
-                payload: {field, operator, value: field === 'date' ? toUkDate(value) : value}
+                payload: {field, operator, value: field === 'date' ? Date.parse(value) : value}
             });
             setFormSubmitted(false);
             setField('date');

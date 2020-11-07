@@ -12,9 +12,12 @@ export default function AppliedFilters() {
                 <>
                     <p className="mb-0">Applied filters:</p>
                     <ul>
-                        {filters.map(({field, operator, value}, index) => (
-                            <li key={index}>{`${field} ${operator} ${value}`}</li>
-                        ))}
+                        {filters.map(({field, operator, value}, index) => {
+                            if (field === 'date') {
+                                value = new Date(value).toLocaleDateString();
+                            }
+                            return <li key={index}>{`${field} ${operator} ${value}`}</li>;
+                        })}
                     </ul>
                 </>
             )}

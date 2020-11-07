@@ -42,7 +42,7 @@ export default function ExpensesTable() {
                     <tbody>
                         {filteredExpenses.map(({date, location, amount, category}, index) => (
                             <tr key={index}>
-                                <td>{date}</td>
+                                <td>{new Date(date).toLocaleDateString()}</td>
                                 <td>{location}</td>
                                 <td>{amount}</td>
                                 <td>{category}</td>

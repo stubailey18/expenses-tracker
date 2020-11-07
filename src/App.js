@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
-import { AppStateContext, initialAppState, reducer } from './app-state';
+import { actionTypes, AppStateContext, initialAppState, reducer } from './app-state';
 import Expenses from './Expenses';
 import ExpenseForm from './ExpenseForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +9,26 @@ import './App.css';
 export default function App() {
 
   const [state, dispatch] = useReducer(reducer, initialAppState);
+  const {expenses, filters} = state;
+
+  useEffect(() => {
+    dispatch({
+      type: actionTypes.EXPENSES_FROM_STORAGE, 
+      payload: JSON.parse(localStorage.getItem('expenses')) || []
+    });
+    dispatch({
+      type: actionTypes.FILTERS_FROM_STORAGE, 
+      payload: JSON.parse(localStorage.getItem('filters')) || []
+    });
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+  }, [expenses]);
+
+  useEffect(() => {
+    localStorage.setItem('filters', JSON.stringify(filters));
+  }, [filters]);
   
   return (
     <div className="container">
