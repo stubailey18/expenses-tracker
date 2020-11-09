@@ -9,6 +9,7 @@ import ExpensesOverTime from './ExpensesOverTime';
 import ExpensesByCategory from './ExpensesByCategory';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { loadDemoData } from './utils';
 
 export default function App() {
 
@@ -16,6 +17,10 @@ export default function App() {
   const {expenses, filters} = state;
 
   useEffect(() => {
+    // FOR DEMO ONLY
+    // -------------
+    loadDemoData();
+    // -------------
     dispatch({
       type: actionTypes.EXPENSES_FROM_STORAGE, 
       payload: JSON.parse(localStorage.getItem('expenses')) || []
