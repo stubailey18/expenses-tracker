@@ -7,6 +7,18 @@ div#root > div {
     background-color: white;
 }
 
+th > button {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    font-weight: bold;
+}
+
+th > button:focus {
+    outline: none;
+}
+
 .invalidField {
     border: solid 1px red !important;
 }

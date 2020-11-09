@@ -1,8 +1,12 @@
 import React, { useEffect, useReducer } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import { actionTypes, AppStateContext, initialAppState, reducer } from './app-state';
-import Expenses from './Expenses';
 import ExpenseForm from './ExpenseForm';
+import ExpensesFilterForm from './ExpensesFilterForm';
+import AppliedFilters from './AppliedFilters';
+import ExpensesTable from './ExpensesTable';
+import ExpensesOverTime from './ExpensesOverTime';
+import ExpensesByCategory from './ExpensesByCategory';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -41,12 +45,38 @@ export default function App() {
           <li className="nav-item">
             <Link to="/addexpense" className="nav-link">Add expense</Link>
           </li>
+          <li className="nav-item">
+            <Link to="/expensesovertime" className="nav-link">Expenses over time</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/expensesbycategory" className="nav-link">Expenses by category</Link>
+          </li>
         </ul>
       </nav> 
       <Switch>
         <AppStateContext.Provider value={{state, dispatch}}>
-          <Route exact path="/"><Expenses /></Route>  
+          <Route exact path="/">
+            <>
+              <ExpensesFilterForm />
+              <AppliedFilters />
+              <ExpensesTable />
+            </>
+          </Route>  
           <Route path="/addexpense"><ExpenseForm /></Route> 
+          <Route path="/expensesovertime">
+            <>
+              <ExpensesFilterForm />
+              <AppliedFilters />
+              <ExpensesOverTime />
+            </>
+          </Route> 
+          <Route path="/expensesbycategory">
+            <>
+              <ExpensesFilterForm />
+              <AppliedFilters />
+              <ExpensesByCategory />
+            </>
+          </Route>
         </AppStateContext.Provider> 
       </Switch>     
     </div>

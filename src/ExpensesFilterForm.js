@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { categories } from './app-data';
 import { actionTypes, AppStateContext } from './app-state';
 
 export default function ExpensesFilterForm() {
@@ -41,14 +42,27 @@ export default function ExpensesFilterForm() {
                 onChange={e => setOperator(e.target.value)}
                 className="form-control">
                 <option>&#61;</option>
-                <option>&gt;</option>
-                <option>&lt;</option>
+                <option>&ge;</option>
+                <option>&le;</option>
             </select>&nbsp;
-            <input 
-                type={field === 'date' ? 'date' : 'text'}
-                value={value}
-                onChange={e => setValue(e.target.value)}
-                className={`form-control ${!value && formSubmitted && 'invalidField'}`} />&nbsp;
+            {field !== 'category' && (
+                <input 
+                    type={field === 'date' ? 'date' : 'text'}
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
+                    className={`form-control ${!value && formSubmitted && 'invalidField'}`} />
+            )}&nbsp;
+            {field === 'category' && (
+                <select
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
+                    className={`form-control ${!value && formSubmitted && 'invalidField'}`}>
+                    <option value=''>-- Select --</option>
+                    {categories.map(category => (
+                        <option value={category}>{category}</option>
+                    ))}
+                </select>
+            )}
             <div className="mt-3 mt-md-0">
                 <button 
                     type="button"

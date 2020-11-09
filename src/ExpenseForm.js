@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { categories } from './app-data';
 import { actionTypes, AppStateContext } from './app-state';
-import { isNum, toUkDate } from './utils';
+import { isNum } from './utils';
 
 export default function ExpenseForm() {
-
-    const categories = ['Food', 'Fuel', 'Entertainment'];
 
     const [expense, setExpense] = useState({date: '', location: '', amount: '', category: ''});
     const [progress, setProgress] = useState(0);
