@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js';
 import { AppStateContext } from './app-state';
-import { filterExpenses } from './utils';
+import { filterExpenses, nextPlotColourGenerator } from './utils';
 
 export default function ExpensesByCategory() {
 
@@ -26,7 +26,10 @@ export default function ExpensesByCategory() {
                     .map(expense => expense.amount)
                     .reduce((sum, amount) => sum + amount, 0)); 
             });
-            new Chart(canvasRef.current, {
+            if (window.chart) {
+                window.chart.destroy();
+            }
+            window.chart = new Chart(canvasRef.current, {
                 type: 'doughnut',
                 data: {
                     labels: Array.from(chartData.keys()),
@@ -34,16 +37,7 @@ export default function ExpensesByCategory() {
                         {
                             label: 'Category',
                             data: Array.from(chartData.values()),
-                            backgroundColor: [
-                                '#003f5c',
-                                '#58508d',
-                                '#bc5090',
-                                '#a05195',
-                                '#d45087',
-                                '#f95d6a',
-                                '#ff7c43',
-                                '#ffa600'
-                            ]
+                            backgroundColor: Array.from(nextPlotColourGenerator())
                         }
                     ]
                 }

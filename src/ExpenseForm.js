@@ -78,7 +78,7 @@ export default function ExpenseForm() {
                             onChange={e => setExpense({...expense, category: e.target.value})}
                             className={`form-control ${!expense.category && formSubmitted && 'invalidField'}`}>
                             <option value="">-- Select --</option>
-                            {categories.map((category, index) => <option key={index}>{category}</option>)}
+                            {categories.sort().map((category, index) => <option key={index}>{category}</option>)}
                         </select>
                         {!expense.category && formSubmitted && <span>The category is required</span>}
                     </div>

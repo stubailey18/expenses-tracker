@@ -51,18 +51,19 @@ export default function ExpensesFilterForm() {
                     value={value}
                     onChange={e => setValue(e.target.value)}
                     className={`form-control ${!value && formSubmitted && 'invalidField'}`} />
-            )}&nbsp;
+            )}
             {field === 'category' && (
                 <select
                     value={value}
                     onChange={e => setValue(e.target.value)}
                     className={`form-control ${!value && formSubmitted && 'invalidField'}`}>
                     <option value=''>-- Select --</option>
-                    {categories.map(category => (
+                    {categories.sort().map(category => (
                         <option value={category}>{category}</option>
                     ))}
                 </select>
             )}
+            &nbsp;
             <div className="mt-3 mt-md-0">
                 <button 
                     type="button"
