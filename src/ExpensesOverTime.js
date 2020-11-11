@@ -4,10 +4,10 @@ import { categories } from './app-data';
 import { AppStateContext } from './app-state';
 import { filterExpenses, nextPlotColourGenerator } from './utils';
 
-export default function ExpensesOverTime() {
+export default function ExpensesOverTime(props) {
 
     const [filteredExpenses, setFilteredExpenses] = useState([]);
-    const [categoryLines, setCategoryLines] = useState({});
+    const [plotLines, setPlotLines] = useState({});
 
     const {state} = useContext(AppStateContext);
     const {expenses, filters} = state;
@@ -15,11 +15,17 @@ export default function ExpensesOverTime() {
     const canvasRef = useRef();
 
     useEffect(() => {
-        const plotColours = Array.from(nextPlotColourGenerator());
         const temp = {};
-        categories.sort().forEach((category, index) => 
-            temp[category] = {on: true, colour: plotColours[index]});
-        setCategoryLines(temp);
+        const plotColours = Array.from(nextPlotColourGenerator());
+        // the categories are imported from ./app-data.js
+        ['All'].concat(categories).sort().forEach((category, index) => {
+            if (props.categories && props.categories.includes(category)) {
+                temp[category] = {on: true, colour: plotColours[index]};
+            } else {
+                temp[category] = {on: false, colour: plotColours[index]};
+            }
+        });
+        setPlotLines(temp);
     }, []);
 
     useEffect(() => {
@@ -28,55 +34,54 @@ export default function ExpensesOverTime() {
     
     useEffect(() => {
         if (filteredExpenses.length) {
-
-            let uniqueDates = new Set(filteredExpenses.map(expense => expense.date));
-            uniqueDates = Array.from(uniqueDates).sort((d1, d2) => d1 - d2);
-            const labels = uniqueDates.map(date => new Date(date).toLocaleDateString());
-
+            const uniqueDates = new Set();
             const datasets = [];
-            for (let line in categoryLines) {
-                // if the plot line for the given category is turned on
-                if (categoryLines[line].on) {
-                    const map = new Map();
-                    uniqueDates.forEach(date => {
-                        map.set(date, filteredExpenses
-                            .filter(expense => expense.date === date)
-                            .filter(expense => expense.category === line)
-                            .map(expense => expense.amount)
-                            .reduce((sum, amount) => sum + amount, 0));
+            for (let category in plotLines) {
+                if (plotLines[category].on) {
+                    const data = [];
+                    const categoryExpenses = filteredExpenses
+                        .filter(e => category !== 'All' ? e.category === category : true);
+                    // remove the time portion of the date so as to allow for summing of expenses by date
+                    categoryExpenses.forEach(e => e.date = new Date(e.date).setHours(0, 0, 0, 0));
+                    const categoryDates = categoryExpenses.map(e => e.date).sort((d1, d2) => d1 - d2);
+                    categoryDates.forEach(date => {
+                        uniqueDates.add(date);
+                        data.push({
+                            x: new Date(date).toLocaleDateString(),
+                            y: categoryExpenses
+                                .filter(e => e.date === date)
+                                .map(e => e.amount)
+                                .reduce((sum, amount) => sum + amount, 0)
+                        });
                     });
                     datasets.push(
                         {
-                            label: line,
-                            data: Array.from(map.values()),
-                            backgroundColor: categoryLines[line].colour,
+                            label: category,
+                            data: data,
+                            borderColor: plotLines[category].colour,
                             fill: false
                         }
                     );
                 }
             }
-            if (window.chart) {
-                window.chart.destroy();
+            if (window.overTimeChart) {
+                window.overTimeChart.destroy();
             }
-            window.chart = new Chart(canvasRef.current, {
-                type: 'bar',
+            window.overTimeChart = new Chart(canvasRef.current, {
+                type: 'line',
                 data: {
-                    labels,
+                    labels: Array.from(uniqueDates).sort().map(date => new Date(date).toLocaleDateString()),
                     datasets
                 },
                 options: {
-                    scales: {
-						xAxes: [{
-							stacked: true,
-						}],
-						yAxes: [{
-							stacked: true
-						}]
-					}
+                    tooltips: {
+                        // tooltips are currently buggy for as yet unknown reasons
+                        enabled: false
+                    }
                 }
             });
         }
-    }, [filteredExpenses, categoryLines]);
+    }, [filteredExpenses, plotLines]);
 
     return (
         <>
@@ -84,14 +89,13 @@ export default function ExpensesOverTime() {
                 ? (
                     <>
                         <form className="form-inline">
-                            Categories:&nbsp;
-                            {Object.keys(categoryLines).sort().map(category => (
+                            {Object.keys(plotLines).sort().map(category => (
                                 <div key={category} className="form-check-inline">
                                     <label className="form-check-label">
                                         <input 
                                             type="checkbox" 
-                                            checked={categoryLines[category].on === true}
-                                            onChange={e => setCategoryLines(lines => 
+                                            checked={plotLines[category].on === true}
+                                            onChange={e => setPlotLines(lines => 
                                                 ({...lines, [category]: {...lines[category], on: !lines[category].on}}))}
                                             className="form-check-input" />
                                         {category}

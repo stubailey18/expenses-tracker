@@ -59,12 +59,12 @@ export default function ExpensesFilterForm() {
                     className={`form-control ${!value && formSubmitted && 'invalidField'}`}>
                     <option value=''>-- Select --</option>
                     {categories.sort().map(category => (
-                        <option value={category}>{category}</option>
+                        <option key={category} value={category}>{category}</option>
                     ))}
                 </select>
             )}
             &nbsp;
-            <div className="mt-3 mt-md-0">
+            <div className="mt-3 mt-sm-0">
                 <button 
                     type="button"
                     onClick={handleApply}

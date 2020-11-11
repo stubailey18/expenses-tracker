@@ -56,7 +56,7 @@ const reducer = (prevState, action) => {
                 sortsCopy.push({key: action.payload, order: 'asc'});
             }
             return {...prevState, sorts: sortsCopy};
-
+        
         default:
             return prevState;
     }

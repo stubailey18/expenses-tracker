@@ -26,10 +26,10 @@ export default function ExpensesByCategory() {
                     .map(expense => expense.amount)
                     .reduce((sum, amount) => sum + amount, 0)); 
             });
-            if (window.chart) {
-                window.chart.destroy();
+            if (window.byCategoryChart) {
+                window.byCategoryChart.destroy();
             }
-            window.chart = new Chart(canvasRef.current, {
+            window.byCategoryChart = new Chart(canvasRef.current, {
                 type: 'doughnut',
                 data: {
                     labels: Array.from(chartData.keys()),
