@@ -21,10 +21,10 @@ export default function ExpensesByCategory() {
             let uniqueCategories = new Set(filteredExpenses.map(expense => expense.category));
             const chartData = new Map();
             uniqueCategories.forEach(category => {
-                chartData.set(category, filteredExpenses
+                chartData.set(category, (filteredExpenses
                     .filter(expense => expense.category === category)
                     .map(expense => expense.amount)
-                    .reduce((sum, amount) => sum + amount, 0)); 
+                    .reduce((sum, amount) => sum + amount, 0)).toFixed(2)); 
             });
             if (window.byCategoryChart) {
                 window.byCategoryChart.destroy();
