@@ -26,7 +26,7 @@ export default function ExpensesOverTime(props) {
             }
         });
         setPlotLines(temp);
-    }, []);
+    }, [props.categories]);
 
     useEffect(() => {
         setFilteredExpenses(filterExpenses(expenses, filters));
