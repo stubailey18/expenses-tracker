@@ -7,9 +7,12 @@ import { filterExpenses } from './utils';
 export default function ExpensesTable() {
     
     const [filteredAndSortedExpenses, setFilteredAndSortedExpenses] = useState([]);
-
     const {state, dispatch} = useContext(AppStateContext);
     const {expenses, filters, sorts} = state;
+    const formatter = Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP'
+    });
 
     useEffect(() => {
         const filteredExpenses = filterExpenses(expenses, filters);
@@ -97,7 +100,7 @@ export default function ExpensesTable() {
                             <tr key={index}>
                                 <td>{new Date(date).toLocaleDateString()}</td>
                                 <td>{location}</td>
-                                <td>{amount}</td>
+                                <td>{formatter.format(amount)}</td>
                                 <td>{category}</td>
                             </tr>
                         ))}

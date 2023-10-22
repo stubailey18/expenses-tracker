@@ -43,8 +43,8 @@ export default function App() {
   
   return (
     <div className="container">
-      <h1 className="display-4 pt-4 pb-4">My Expenses</h1>
-      <nav className="row navbar navbar-expand-sm navbar-light bg-light justify-content-center mb-3">
+      {/* <h1 className="display-4 pt-4 pb-4 text-center">Expenses Tracker</h1> */}
+      <nav className="row navbar navbar-expand-sm navbar-dark bg-dark mb-3">
         <button 
           type="button" 
           data-toggle="collapse" 
