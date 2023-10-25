@@ -43,8 +43,8 @@ export default function App() {
   
   return (
     <div className="container">
-      {/* <h1 className="display-4 pt-4 pb-4 text-center">Expenses Tracker</h1> */}
-      <nav className="row navbar navbar-expand-sm navbar-dark bg-dark mb-3">
+      <h1 className="display-4 pt-4 pb-4 text-center">Expenses Tracker</h1>
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark justify-content-center mb-3">
         <button 
           type="button" 
           data-toggle="collapse" 
@@ -58,16 +58,16 @@ export default function App() {
               <Link to="/" className="navbar-brand">ET</Link>
             </li>
             <li data-toggle="collapse" data-target="#collapsibleNavbar.show" className="nav-item">
-              <Link to="/myexpenses" className="nav-link">My expenses</Link>
+              <Link to="/myexpenses" className="nav-link">Expenses</Link>
             </li>
             <li data-toggle="collapse" data-target="#collapsibleNavbar.show" className="nav-item">
-              <Link to="/addexpense" className="nav-link">Add expense</Link>
+              <Link to="/addexpense" className="nav-link">Add new</Link>
             </li>
             <li data-toggle="collapse" data-target="#collapsibleNavbar.show" className="nav-item">
-              <Link to="/expensesovertime" className="nav-link">Expenses over time</Link>
+              <Link to="/expensesovertime" className="nav-link">Line chart</Link>
             </li>
             <li data-toggle="collapse" data-target="#collapsibleNavbar.show" className="nav-item">
-              <Link to="/expensesbycategory" className="nav-link">Expenses by category</Link>
+              <Link to="/expensesbycategory" className="nav-link">Doughnut chart</Link>
             </li>
           </ul>
         </div>
