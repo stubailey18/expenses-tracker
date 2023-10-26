@@ -61,7 +61,7 @@ export default function App() {
               <Link to="/myexpenses" className="nav-link">Expenses</Link>
             </li>
             <li data-toggle="collapse" data-target="#collapsibleNavbar.show" className="nav-item">
-              <Link to="/addexpense" className="nav-link">Add new</Link>
+              <Link to="/addexpense" className="nav-link">New Expense</Link>
             </li>
             <li data-toggle="collapse" data-target="#collapsibleNavbar.show" className="nav-item">
               <Link to="/expensesovertime" className="nav-link">Line chart</Link>

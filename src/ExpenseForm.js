@@ -40,6 +40,7 @@ export default function ExpenseForm() {
     return (
         <div className="row justify-content-center">
             <div className="col-sm-10 col-md-8 col-lg-6">
+                <h4 className="mb-3">New Expense</h4>
                 <div className="progress mb-3">
                     <div className="progress-bar bg-success" style={{width: `${progress}%`}}></div>
                 </div>
@@ -86,7 +87,7 @@ export default function ExpenseForm() {
                         <button 
                             type="button"
                             onClick={handleSubmit}
-                            className="btn btn-primary">
+                            className="btn btn-dark">
                             Submit
                         </button>
                     </div>

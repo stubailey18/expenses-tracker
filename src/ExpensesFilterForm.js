@@ -68,13 +68,13 @@ export default function ExpensesFilterForm() {
                 <button 
                     type="button"
                     onClick={handleApply}
-                    className="btn btn-primary">
+                    className="btn btn-dark">
                     Apply
                 </button>&nbsp;
                 <button 
                     type="button"
                     onClick={() => dispatch({type: actionTypes.CLEAR_FILTERS})}
-                    className="btn btn-primary">
+                    className="btn btn-dark">
                     Clear
                 </button>
             </div>
